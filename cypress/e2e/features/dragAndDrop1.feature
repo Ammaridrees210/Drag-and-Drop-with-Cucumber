@@ -7,4 +7,5 @@ Feature: Drag and Drop Element in Artboard
     Given User switches to Desktop View
     When User selects and drags an object to the Artboard View
     When User select an Artboard section to drag objects
-    Then User selects and drags content to the Artboard View
+    When User selects and drags content to the Artboard View
+    Then User click on Clear icon and created artoboard are clear

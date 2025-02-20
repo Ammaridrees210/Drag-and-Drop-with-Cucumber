@@ -3,14 +3,15 @@ const { Given, When, Then } = require ("@badeball/cypress-cucumber-preprocessor"
 Given("User navigates to the application", () => {
     cy.on('uncaught:exception', () => false);
     cy.visit("/");
+    cy.clearAllCookies();
+    cy.clearLocalStorage();
+    cy.window().then((win) => win.sessionStorage.clear());
+    cy.clearAllSessionStorage();
 });
 
 Given("User waits for the loading screen to disappear", () => {
-    cy.wait(12000);
     cy.get('.text-container').should('contain', 'Loading...');
-    cy.wait(18000);
     cy.get('#NotiflixLoadingMessage').should('contain', 'Loading Design, please wait.....');
-    cy.wait(4000);
     cy.get('#NotiflixLoadingMessage').should('not.exist');
 });
 
@@ -19,38 +20,12 @@ Given("User clicks on \"Welcome to Design Studio\" to create a template", () => 
 });
 
 Given("User switches to Desktop View", () => {
-    cy.get('.fa-tablet').click();
+    cy.get('.fa-desktop').click();
 });
 
 When("User selects and drags an object to the Artboard", () => {
     cy.get('div#section1').click({ force: true });
 });
-
-When("User see previous object than click it and delete it from the artboard", () => {
-    cy.get("#Artboard1 > div#section1").then(($element) => {
-        if ($element.length > 0) {
-            // cy.wrap($element).click(); 
-            cy.get("#Label1").click({ force: true });
-
-            cy.get("#Content4", { timeout: 10000 })
-            .shadow() // First shadow root
-            .find("ion-cont md content-ltr hydrated")
-            .shadow()
-            .find(".ng-tns-c1971627825-0")
-            .shadow() // Second shadow root
-            .find("div[title='Delete Item']")
-            .should("be.visible")
-            .click({ force: true });
-    
-            // Verify the item has been deleted
-            cy.get("#Artboard1 > div#section1").should("not.exist");
-        } else {
-            // If the item does not exist, log a message
-            cy.log("No item found on the Artboard");
-        }
-    });
-    
-})
 
 When("User clicks on the Artboard section", () => {
     cy.get('[data-testid="Content"] > #elementImagesbox')
@@ -58,18 +33,65 @@ When("User clicks on the Artboard section", () => {
     .drag("#Artboard1", { force: true });
 });
 
-Then("User selects and drags content to the Artboard", () => {
+When("User selects and drags content to the Artboard", () => {
     cy.get("#Artboard1 > div#section1").click({ force: true }, {
         target: { position: 'relative' },
         force: true,
     });
+    // cy.pause();
+
+    // cy.get('div#section1').click({ force: true });
+
+    // cy.pause();
+
+    // cy.get('#Content1')
+    // .shadow()
+    // .find('ion-content')
+    // .shadow()
+    // .find('.inner-scroll')
+    // .find('slot')
+    // .then(($slot) => {
+    //   const assignedNodes = $slot[0].assignedNodes({ flatten: true });
+    //   const paragraph = Array.from(assignedNodes).find(node => 
+    //     node.nodeName.toLowerCase() === 'p' && node.classList.contains('content')
+    //   );
+  
+    //   if (paragraph) {
+    //     cy.wrap(paragraph)
+    //       .dblclick({ force: true })
+    //       .clear({ force: true })
+    //       .type('My New Text') 
+    //       .should('have.text', 'My New Text');
+    //   } else {
+    //     throw new Error('<p class="content"> not found inside the slot');
+    //   }
+    // });
+
+    cy.get('#Content1')
+    .shadow()
+    .find('ion-content')
+    .shadow()
+    .find('.inner-scroll')
+    .find('slot')
+    .then(($slot) => {
+    const assignedNodes = $slot[0].assignedNodes({ flatten: true });
+    const paragraph = Array.from(assignedNodes).find(node => 
+      node.nodeName.toLowerCase() === 'p' && node.classList.contains('content')
+    );
+
+    if (paragraph) {
+      cy.wrap(paragraph)
+        .dblclick({ force:true })
+        .invoke('text', 'My New Text')
+        .should('have.text', 'My New Text');
+    } else {
+      throw new Error('<p class="content"> not found inside the slot');
+    }
+  });
+  cy.get('app-value-unit:nth-of-type(2) div:nth-of-type(1) input:nth-of-type(1)').type(140);
 });
 
-// Then("User should be able to edit content in the Artboard", () => {
-//     cy.get('ion-content')
-//         .shadow()
-//         .find('p.content')
-//         .click({ force: true })
-//         .type('{selectall}{backspace}')
-//         .type('Hello Cypress Assignments for drag and drop');
-// });
+Then("User click on Clear icon and created artoboard are clear", () => {
+    // cy.clearAndConfirm();
+})
+

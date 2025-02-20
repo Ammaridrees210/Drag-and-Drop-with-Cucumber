@@ -8,21 +8,12 @@ When("User select an Artboard section to drag objects", () => {
     cy.get('[data-testid="Label"]>#elementImagesbox')
         .click()
         .drag("#Artboard1", { force: true });
-        cy.pause();
 });
 
-Then("User selects and drags content to the Artboard View", () => {
+When("User selects and drags content to the Artboard View", () => {
     cy.get("#Artboard1 > div#section1").click({ force: true }, {
         target: { position: 'relative' },
         force: true,
     });
+    cy.pause();
 });
-
-// Then("User should be able to edit content in the Artboard", () => {
-//     cy.get('ion-content')
-//         .shadow()
-//         .find('p.content')
-//         .click({ force: true })
-//         .type('{selectall}{backspace}')
-//         .type('Hello Cypress Assignments for drag and drop');
-// });
