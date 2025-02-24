@@ -16,9 +16,9 @@ async function setupNodeEvents(on, config) {
   return config;
 }
 
-
 module.exports = defineConfig({
-  defaultCommandTimeout:50000,
+  video: true,
+  defaultCommandTimeout:30000,
   e2e: {
     baseUrl: 'https://dev.platform.creatingly.com/apps/',
     specPattern: "cypress/e2e/features/*.feature",
