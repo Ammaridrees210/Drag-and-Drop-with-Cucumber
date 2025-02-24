@@ -63,12 +63,15 @@ When("User selects and drags content to the Artboard", () => {
             throw new Error('<p class="content"> not found inside the slot');
         }
     });
+});
+
+When("User see draged content item is visible then click on it for Edit content", () => {
     cy.get('#Artboard1').scrollIntoView({ ensureScrollable: false });
     cy.get('#Artboard1').should('be.visible').scrollIntoView();
     slowCypressDown(500);
     cy.get('app-value-unit:nth-of-type(1) div:nth-of-type(1) input:nth-of-type(1)').type(97)
     cy.get('app-value-unit:nth-of-type(2) div:nth-of-type(1) input:nth-of-type(1)').type(150);
-});
+})
 
 Then("User click on Clear icon and created artoboard are clear", () => {
     cy.clearAndConfirm();

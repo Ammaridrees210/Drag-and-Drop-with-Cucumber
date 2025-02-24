@@ -2,17 +2,17 @@ const { When } = require("@badeball/cypress-cucumber-preprocessor");
 import { slowCypressDown } from 'cypress-slow-down'
 
 
-When("User selects and drags an object to the Artboard View", () => {
+When("User selects and drags an object toward Artboard View", () => {
     cy.get('div#section1').click({ force: true });
 });
 
-When("User select an Artboard section to drag objects", () => {
+When("User select an Artboard section to drag label object element", () => {
     cy.get('[data-testid="Label"]>#elementImagesbox')
     .click()
     .drag("#Artboard1", { force: true });
 });
 
-When("User selects and drags content to the Artboard View", () => {
+When("User see draged Label item is visible then click on it for Edit label text", () => {
     cy.get("#Artboard1 > div#section1").click({ force: true }); 
     cy.get('#Label1')
     .shadow()

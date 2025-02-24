@@ -3,17 +3,17 @@ import { slowCypressDown } from 'cypress-slow-down'
 
 
 
-When("User selects and drags an object to the selected artboard", () => {
+When("User selects and drags an object toward Artboard", () => {
     cy.get('div#section1').click({ force: true });
 });
 
-When("User clicks on the Artboard section to drag", () => {
+When("User click on the selected Artboard section to paste draged object element", () => {
     cy.get('[data-testid="Paragraph"]>#elementImagesbox')
     .click()
     .drag("#Artboard1", { force: true });
 });
 
-When("User selects and drags content to the Artboard section", () => {
+When("User see draged paragraph item is visible then click on it for Edit paragraph Text", () => {
     cy.get("#Artboard1 > div#section1").click({ force: true });
     cy.get('#Paragraph1')
     .shadow()
