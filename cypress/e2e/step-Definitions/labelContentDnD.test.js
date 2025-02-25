@@ -1,5 +1,11 @@
 const { When } = require("@badeball/cypress-cucumber-preprocessor");
 import { slowCypressDown } from 'cypress-slow-down'
+const { addCompareSnapshotCommand } = require("cypress-visual-regression/dist/command");
+addCompareSnapshotCommand({
+    capture: "fullPage",
+    errorThreshold: 0,
+  
+});
 
 
 When("User selects and drags an object toward Artboard View", () => {

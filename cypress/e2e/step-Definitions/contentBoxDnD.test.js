@@ -1,20 +1,23 @@
 const { Given, When, Then } = require ("@badeball/cypress-cucumber-preprocessor");
 import { slowCypressDown } from 'cypress-slow-down'
+const { addCompareSnapshotCommand } = require("cypress-visual-regression/dist/command");
+addCompareSnapshotCommand({
+    capture: "fullPage",
+    errorThreshold: 0,
+});
+  
 
 
 Given("User navigates to the application", () => {
     cy.on('uncaught:exception', () => false);
     cy.visit("/");
-    cy.clearAllCookies();
-    cy.clearLocalStorage();
-    cy.window().then((win) => win.sessionStorage.clear());
-    cy.clearAllSessionStorage();
 });
 
 Given("User waits for the loading screen to disappear", () => {
-    cy.get('.text-container').should('contain', 'Loading...');
+    cy.get('.text-container').should('contain', 'Loading...')
     cy.get('#NotiflixLoadingMessage').should('contain', 'Loading Design, please wait.....');
     cy.get('#NotiflixLoadingMessage').should('not.exist');
+    cy.compareSnapshot('capture Full screen for to compare');
 
 });
 
