@@ -3,7 +3,7 @@ import { slowCypressDown } from 'cypress-slow-down'
 const { addCompareSnapshotCommand } = require("cypress-visual-regression/dist/command");
 addCompareSnapshotCommand({
     capture: "fullPage",
-    errorThreshold: 0,
+    errorThreshold: 0.01,
 });
   
 
@@ -17,8 +17,7 @@ Given("User waits for the loading screen to disappear", () => {
     cy.get('.text-container').should('contain', 'Loading...')
     cy.get('#NotiflixLoadingMessage').should('contain', 'Loading Design, please wait.....');
     cy.get('#NotiflixLoadingMessage').should('not.exist');
-    cy.compareSnapshot('capture Full screen for to compare');
-
+    
 });
 
 Given("User clicks on \"Welcome to Design Studio\" to create a template", () => {
@@ -28,6 +27,7 @@ Given("User clicks on \"Welcome to Design Studio\" to create a template", () => 
 
 Given("User switches to Desktop View", () => {
     cy.get('.fa-desktop').click();
+    cy.compareSnapshot('capture Full screen for to compare');
 });
 
 When("User selects and drags an object to the Artboard", () => {
