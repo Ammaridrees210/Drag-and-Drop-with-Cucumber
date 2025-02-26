@@ -27,6 +27,9 @@ Given("User clicks on \"Welcome to Design Studio\" to create a template", () => 
 
 Given("User switches to Desktop View", () => {
     cy.get('.fa-desktop').click();
+    cy.get('[data-testid="Content"] > #elementImagesbox').should("exist");
+    cy.get('[data-testid="Label"] > #elementImagesbox').should('exist');
+    cy.get('[data-testid="Paragraph"] > #elementImagesbox').should('exist');
     cy.compareSnapshot('capture Full screen for to compare');
 });
 
